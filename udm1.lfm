@@ -1,0 +1,46 @@
+object DM1: TDM1
+  OldCreateOrder = False
+  Height = 193
+  HorizontalOffset = 400
+  VerticalOffset = 244
+  Width = 403
+  PPI = 96
+  object C1: TSQLite3Connection
+    Connected = False
+    LoginPrompt = False
+    DatabaseName = 'c:\Users\paolo.bertorelli\Documents\Progetti\GestFarmaci\Farmaci.db3'
+    KeepConnection = False
+    Transaction = MainTrns
+    left = 24
+    top = 24
+  end
+  object MainQry: TSQLQuery
+    FieldDefs = <>
+    Database = C1
+    Transaction = MainTrns
+    SQL.Strings = (
+      'select *'
+      ', case when consumo is not null then (utile / consumo) else null end as autonomia'
+      ', case when consumo is not null then date(utile / consumo + julianday(ultimo_agg) + 0.5) else null end as data_esaurim'
+      'from farmaci'
+      'order by Etichetta;'
+    )
+    Params = <>
+    left = 104
+    top = 24
+  end
+  object MainTrns: TSQLTransaction
+    Active = False
+    Database = C1
+    left = 64
+    top = 24
+  end
+  object SvcQry: TSQLQuery
+    FieldDefs = <>
+    Database = C1
+    Transaction = MainTrns
+    Params = <>
+    left = 140
+    top = 24
+  end
+end
