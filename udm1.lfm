@@ -20,9 +20,7 @@ object DM1: TDM1
     Transaction = MainTrns
     SQL.Strings = (
       'select *'
-      ', case when consumo is not null then (utile / consumo) else null end as autonomia'
-      ', case when consumo is not null then date(utile / consumo + julianday(ultimo_agg) + 0.5) else null end as data_esaurim'
-      'from farmaci'
+      'from main'
       'order by Etichetta;'
     )
     Params = <>

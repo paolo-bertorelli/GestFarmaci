@@ -1,11 +1,11 @@
 object frmDatasheet: TfrmDatasheet
   Tag = 1
-  Left = 332
-  Height = 323
-  Top = 145
+  Left = 477
+  Height = 378
+  Top = 146
   Width = 887
   Caption = 'Foglio dati'
-  ClientHeight = 323
+  ClientHeight = 378
   ClientWidth = 887
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -20,12 +20,12 @@ object frmDatasheet: TfrmDatasheet
     Cancel = True
     Caption = 'esc'
     OnClick = cmdCancClick
-    TabOrder = 2
+    TabOrder = 1
   end
   object dgMainGrid: TDBGrid
     Left = 16
-    Height = 269
-    Top = 16
+    Height = 296
+    Top = 24
     Width = 849
     Anchors = [akTop, akLeft, akRight, akBottom]
     Color = clWindow
@@ -34,25 +34,24 @@ object frmDatasheet: TfrmDatasheet
     TabOrder = 0
     OnKeyDown = dgMainGridKeyDown
   end
-  object DBNavigator1: TDBNavigator
-    Left = 16
-    Height = 20
-    Top = 290
-    Width = 849
-    Anchors = [akLeft, akRight, akBottom]
-    AutoSize = True
-    BevelOuter = bvNone
-    ChildSizing.EnlargeHorizontal = crsScaleChilds
-    ChildSizing.EnlargeVertical = crsScaleChilds
-    ChildSizing.ShrinkHorizontal = crsScaleChilds
-    ChildSizing.ShrinkVertical = crsScaleChilds
-    ChildSizing.Layout = cclLeftToRightThenTopToBottom
-    ChildSizing.ControlsPerLine = 100
-    ClientHeight = 20
-    ClientWidth = 849
-    DataSource = dsMainGrid
-    Options = []
-    TabOrder = 1
+  object btnEdit: TButton
+    Left = 72
+    Height = 25
+    Top = 336
+    Width = 75
+    Caption = 'Mo&difica'
+    OnClick = btnEditClick
+    TabOrder = 2
+  end
+  object btnConf: TButton
+    Tag = 3
+    Left = 264
+    Height = 25
+    Top = 336
+    Width = 75
+    Caption = 'Con&ferma'
+    OnClick = btnConfClick
+    TabOrder = 3
   end
   object dsMainGrid: TDataSource
     DataSet = DM1.MainQry
