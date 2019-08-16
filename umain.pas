@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, db, Forms, Controls, Graphics, Dialogs, DBGrids, StdCtrls,
-  ExtCtrls, Windows, LCLIntf, myUtils in 'c:\lazarus\fpc\3.0.4\source\Import\myutils.pas';
+  ExtCtrls, Windows, LCLIntf, RichMemo, myUtils, variants;
 
 type
 
@@ -19,6 +19,8 @@ type
     cmdDatasheet: TButton;
     DataSource1: TDataSource;
     DBGrid1: TDBGrid;
+    Notebook1: TNotebook;
+    rmOrdine: TRichMemo;
     Timer1: TTimer;
     procedure Button1Click(Sender: TObject);
     procedure cmdUpdateClick(Sender: TObject);
@@ -88,6 +90,8 @@ begin
 end;
 
 procedure TfrmMain.cmdUpdateClick(Sender: TObject);
+var
+  strm: TFileStream;
 begin
   with dm1 do
   begin
@@ -99,27 +103,34 @@ begin
     MainTrns.Commit;
   end;
 
-  //OpenDocument(AppPath + 'richiesta.txt' );
-  OpenFileDoc(AppPath + 'richiesta.txt' );
-
-
-
-{  with dm1.SvcQry do
+  with dm1.SvcQry do
   begin
     Active:= False;
     SQL.Clear;
-    sql.Append('select id, etichetta, utile, julianday(ultimo_agg), julianday(' +
-      QuotedStr(FormatDateTime('yyyy-mm-dd', now)) + '), utile - (julianday(' +
-      QuotedStr(FormatDateTime('yyyy-mm-dd', now)) + ') - julianday(ultimo_agg)) * consumo as residuo');
-    SQL.Append('from farmaci where consumo is not null;');
-    Active:=True;
+    SQL.Append('Select etichetta, princ_attivo, data_esaurim');
+    SQL.Append('from ordinare');
+    SQL.Append('order by etichetta;');
+    Active:= True;
+    while not EOF do
+    begin
+       rmOrdine.Lines.Append(Format('%s - %s - %s', [VarToStr(FieldValues['etichetta']),
+         VarToStr(FieldValues['princ_attivo']), VarToStrDef(FieldValues['data_esaurim'], '')]));
+       Next;
+    end;
+    Active:= False;
   end;
-  DBGrid1.Columns[1].Width:= 50;
-  DBGrid1.Columns[2].Width:= 50;
-  DBGrid1.Columns[3].Width:= 50;
-  DBGrid1.Columns[4].Width:= 50;
-  DBGrid1.Columns[5].Width:= 50;
-}
+
+  if rmOrdine.Lines.Count > 0 then
+  begin
+     strm:= TFileStream.Create(AppPath + 'richiesta.rtf', fmOpenWrite);
+     rmOrdine.SaveRichText(strm);
+     strm.Free;
+     OpenFileDoc(AppPath + 'richiesta.rtf');
+     rmOrdine.Clear;
+  end;
+
+  //OpenDocument(AppPath + 'richiesta.txt' );
+  //OpenFileDoc(AppPath + 'richiesta.txt' );
 
 end;
 

@@ -1,10 +1,10 @@
 object frmMain: TfrmMain
   Left = 558
-  Height = 241
+  Height = 404
   Top = 258
   Width = 684
   Caption = 'Gestione Farmaci'
-  ClientHeight = 241
+  ClientHeight = 404
   ClientWidth = 684
   OnClick = FormClick
   OnCreate = FormCreate
@@ -56,6 +56,30 @@ object frmMain: TfrmMain
     Caption = 'Button1'
     OnClick = Button1Click
     TabOrder = 4
+  end
+  object Notebook1: TNotebook
+    Left = 77
+    Height = 50
+    Top = 259
+    Width = 75
+    TabOrder = 5
+  end
+  object rmOrdine: TRichMemo
+    Left = 32
+    Height = 90
+    Top = 248
+    Width = 622
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -21
+    Font.Name = 'Candara'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    HideSelection = False
+    ParentFont = False
+    TabOrder = 6
+    WordWrap = False
+    ZoomFactor = 1
   end
   object DataSource1: TDataSource
     DataSet = DM1.SvcQry
